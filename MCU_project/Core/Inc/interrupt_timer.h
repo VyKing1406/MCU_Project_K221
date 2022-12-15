@@ -21,8 +21,11 @@ void setTimer ( int index, int duration );
 
 void timer_run();
 
+
 extern int timer0_flag;
 
 void set_Timer0 ( int duration );
+void timer_ped_run();
+void set_timer_ped(int duration);
 
 #endif /* INC_INTERRUPT_TIMER_H_ */
