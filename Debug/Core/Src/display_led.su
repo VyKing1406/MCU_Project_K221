@@ -1,0 +1,2 @@
+../Core/Src/display_led.c:10:6:Led_display	24	static
+../Core/Src/display_led.c:16:6:Terminal_display	4	static
