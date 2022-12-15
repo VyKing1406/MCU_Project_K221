@@ -10,6 +10,9 @@
 int timer_counter[NU_OF_TIMER] = { 0, 0, 0, 0, 0, 0, 0 };
 int timer_flag[NU_OF_TIMER] = { 0, 0, 0, 0, 0, 0, 0 };
 
+int timerPedCounter;
+int timerPedFlag;
+
 ///////////////////////////////////////////////////////////////////////
 
 void setTimer(int index, int duration) {
@@ -27,3 +30,14 @@ void timer_run() {
 	}
 }
 
+void timer_ped_run() {
+	if (timerPedCounter>0) {
+		timerPedCounter--;
+		if (timerPedCounter==0) timerPedFlag = 1;
+	}
+}
+
+void set_timer_ped(int duration) {
+	timerPedCounter = duration / TIMER_CYCLE;
+	timerPedFlag = 0;
+}
