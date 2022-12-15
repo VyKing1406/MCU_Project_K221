@@ -13,6 +13,7 @@
 extern int timeLeft;
 extern int currentTrafficLight;
 extern int timePWM;
+extern int timeFSM;
 
 void pedestrian_fsm();
 
