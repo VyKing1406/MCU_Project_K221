@@ -11,10 +11,10 @@
 #include "main.h"
 
 extern int timeLeft;
-extern int currentLight;
+extern int currentTrafficLight;
+extern int timePWM;
 
-void pedestrian_display_led();
-void pedestrian_buzzer();
+void pedestrian_fsm();
 
 
 #endif /* INC_PEDESTRIAN_H_ */

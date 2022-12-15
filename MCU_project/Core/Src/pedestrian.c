@@ -9,30 +9,40 @@
 #include "pedestrian.h"
 
 int timeLeft = 0;
-int currentLight;
-void pedestrian_display_led() {
-	switch (currentLigh) {
-	case GREEN:
-		HAL_GPIO_WritePin(PED0_GPIO_Port, PED0_Pin, 0);
-		HAL_GPIO_WritePin(PED1_GPIO_Port, PED1_Pin, 0);
-		break;
-	case RED:
-		HAL_GPIO_WritePin(PED0_GPIO_Port, PED0_Pin, 0);
-		HAL_GPIO_WritePin(PED1_GPIO_Port, PED1_Pin, 0);
-		pedestrian_buzzer();
+int currentTrafficLight;
+int timeFSM = 0;
+int timePWM = 0;
 
-		addTask(5000,xoa, 0);
-		if ()
-		break;
+void pedestrian_fsm(){
+	if (pedestrianFlag == 1){
+		switch (currentTrafficLight) {
+		case RED:
+			HAL_GPIO_WritePin(GPIOB, PED0_Pin, 0);
+			HAL_GPIO_WritePin(GPIOA, PED1_Pin, 1);
+			break;
+		case YELLOW:
+			HAL_GPIO_WritePin(GPIOB, PED0_Pin, 1);
+			HAL_GPIO_WritePin(GPIOA, PED1_Pin, 1);
+			break;
+		case GREEN:
+			timeFSM++;
+			timeLeft = currentTrafficLight;
+			if (timeFSM == 500) {
+				timeFSM = 0;
+				pedestrianFlag = 0;
+				timePWM = 0;
+			}
+			HAL_GPIO_WritePin(GPIOB, PED0_Pin, 1);
+			HAL_GPIO_WritePin(GPIOA, PED1_Pin, 0);
+			if (timeLeft<5) {
+				timePWM++;
+				if (timePWM>=timeLeft) {
+					timePWM = 0;
+					__HAL_TIM_SetCompare(&htim3,TIM_CHANNEL_3, (5 - timeLeft)*20);
+				}
+			}
+		}
 	}
 }
 
 
-void xoa{
-	deletaTask();
-}
-
-void pedestrian_buzzer(){
-	int i = 0;
-	while ()
-}
