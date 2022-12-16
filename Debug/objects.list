@@ -4,6 +4,7 @@
 "./Core/Src/input_reading.o"
 "./Core/Src/interrupt_timer.o"
 "./Core/Src/main.o"
+"./Core/Src/pedestrian.o"
 "./Core/Src/scheduler.o"
 "./Core/Src/stm32f1xx_hal_msp.o"
 "./Core/Src/stm32f1xx_it.o"

@@ -26,7 +26,8 @@ Core/Src/FMS.o: ../Core/Src/FMS.c ../Core/Inc/FMS.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/input_processing.h ../Core/Inc/input_reading.h \
  ../Core/Inc/interrupt_timer.h ../Core/Inc/scheduler.h \
- ../Core/Inc/display_led.h ../Core/Inc/FMS.h
+ ../Core/Inc/display_led.h ../Core/Inc/FMS.h ../Core/Inc/pedestrian.h \
+ ../Core/Inc/global.h
 ../Core/Inc/FMS.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -60,3 +61,5 @@ Core/Src/FMS.o: ../Core/Src/FMS.c ../Core/Inc/FMS.h ../Core/Inc/main.h \
 ../Core/Inc/scheduler.h:
 ../Core/Inc/display_led.h:
 ../Core/Inc/FMS.h:
+../Core/Inc/pedestrian.h:
+../Core/Inc/global.h:

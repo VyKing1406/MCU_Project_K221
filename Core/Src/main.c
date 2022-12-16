@@ -19,13 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
-int Led_timer[3]={0, 0, 0}; // origin timer for led
-int Led_buffer_timer[3]={0, 0, 0};// use when add buffer is pressing.
-int Led_buffer_1_timer[3]={0, 0, 0}; // use when adjust timer for led, start will be eq origin
-int Led_buffer_2_timer[3]={0, 0, 0}; // use when adjust timer for led, start will be eq origin
-int MODE=1;
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -47,6 +40,7 @@ int MODE=1;
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
 
 UART_HandleTypeDef huart2;
 
@@ -59,6 +53,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -98,11 +93,14 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   MX_USART2_UART_Init();
+  MX_TIM3_Init();
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT (&htim2);
 
   SCH_Add_Task(execute_Mode, 0, 1);
-  SCH_Add_Task(	Button_listens, 1, 1);
+  SCH_Add_Task(Button_listens, 1, 1);
+  SCH_Add_Task(button_reading, 2, 1);
 
 
 
@@ -205,6 +203,65 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 0;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 65535;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+  HAL_TIM_MspPostInit(&htim3);
+
+}
+
+/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -251,10 +308,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, Led_31_Pin|Led_12_Pin|Led_22_Pin|Led_21_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, PED0_Pin|Led_12_Pin|Led_22_Pin|Led_21_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, Led_32_Pin|Led_11_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, PED1_Pin|Led_11_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : Mode_Button_Pin Add_Button_Pin */
   GPIO_InitStruct.Pin = Mode_Button_Pin|Add_Button_Pin;
@@ -274,15 +331,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(Confirm_Button_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Led_31_Pin Led_12_Pin Led_22_Pin Led_21_Pin */
-  GPIO_InitStruct.Pin = Led_31_Pin|Led_12_Pin|Led_22_Pin|Led_21_Pin;
+  /*Configure GPIO pins : PED0_Pin Led_12_Pin Led_22_Pin Led_21_Pin */
+  GPIO_InitStruct.Pin = PED0_Pin|Led_12_Pin|Led_22_Pin|Led_21_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Led_32_Pin Led_11_Pin */
-  GPIO_InitStruct.Pin = Led_32_Pin|Led_11_Pin;
+  /*Configure GPIO pins : PED1_Pin Led_11_Pin */
+  GPIO_InitStruct.Pin = PED1_Pin|Led_11_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

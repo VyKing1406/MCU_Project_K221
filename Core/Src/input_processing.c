@@ -10,9 +10,9 @@
 //buffer save duration of led
 
 int index_1_Nomal = 0;
-int index_2_Nomal = 0;
-int state_1_Nomal[3] = { 0, 1, 1 };
-int state_2_Nomal[3] = { 1, 0, 1 };
+int index_2_Nomal = 2;
+int state_1_Nomal[3] = { 1, 1, 0 };
+int state_2_Nomal[3] = { 0, 1, 1 };
 
 void execute_Mode(void) {
 	if (MODE == 1) {
@@ -76,6 +76,8 @@ void Confirm_Button() {
 
 void Perdes_Button(){
 	/// Gọi hàm Lợi.
+	pedestrianFlag = 1;
+	pedestrian_fsm();
 	flag_button_press[3] = 0;
 }
 

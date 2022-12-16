@@ -36,6 +36,8 @@ extern "C" {
 #include "scheduler.h"
 #include "display_led.h"
 #include "FMS.h"
+#include "pedestrian.h"
+#include "global.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -53,6 +55,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -65,14 +69,14 @@ void Error_Handler(void);
 #define Mode_Button_GPIO_Port GPIOA
 #define Add_Button_Pin GPIO_PIN_4
 #define Add_Button_GPIO_Port GPIOA
-#define Perdes_Button_Pin GPIO_PIN_0
-#define Perdes_Button_GPIO_Port GPIOB
+#define Perdes_Button_Pin GPIO_PIN_5
+#define Perdes_Button_GPIO_Port GPIOA
 #define Confirm_Button_Pin GPIO_PIN_0
 #define Confirm_Button_GPIO_Port GPIOB
-#define Led_31_Pin GPIO_PIN_10
-#define Led_31_GPIO_Port GPIOB
-#define Led_32_Pin GPIO_PIN_8
-#define Led_32_GPIO_Port GPIOA
+#define PED0_Pin GPIO_PIN_10
+#define PED0_GPIO_Port GPIOB
+#define PED1_Pin GPIO_PIN_8
+#define PED1_GPIO_Port GPIOA
 #define Led_11_Pin GPIO_PIN_10
 #define Led_11_GPIO_Port GPIOA
 #define Led_12_Pin GPIO_PIN_3

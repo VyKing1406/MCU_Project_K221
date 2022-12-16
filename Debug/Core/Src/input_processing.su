@@ -3,8 +3,8 @@
 ../Core/Src/input_processing.c:50:6:Mode_Button	4	static
 ../Core/Src/input_processing.c:60:6:Add_Button	4	static
 ../Core/Src/input_processing.c:68:6:Confirm_Button	4	static
-../Core/Src/input_processing.c:77:6:Perdes_Button	4	static
-../Core/Src/input_processing.c:82:6:Mode_Nomal	16	static
-../Core/Src/input_processing.c:110:6:Mode_Red	16	static
-../Core/Src/input_processing.c:116:6:Mode_Yellow	16	static
-../Core/Src/input_processing.c:122:6:Mode_Green	16	static
+../Core/Src/input_processing.c:77:6:Perdes_Button	8	static
+../Core/Src/input_processing.c:84:6:Mode_Nomal	16	static
+../Core/Src/input_processing.c:112:6:Mode_Red	16	static
+../Core/Src/input_processing.c:118:6:Mode_Yellow	16	static
+../Core/Src/input_processing.c:124:6:Mode_Green	16	static
