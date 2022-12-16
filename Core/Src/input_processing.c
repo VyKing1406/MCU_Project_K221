@@ -67,7 +67,7 @@ void Add_Button() {
 
 void Confirm_Button() {
 	if (MODE != 1) {
-		Led_buffer_timer[MODE - 2] = Led_timer[MODE - 2];
+		Led_timer[MODE - 2] = Led_buffer_timer[MODE - 2];
 		flag_button_press[2] = 0;
 	}
 	return;

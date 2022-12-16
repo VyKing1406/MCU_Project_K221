@@ -45,7 +45,11 @@ extern TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+int Led_timer[3] = {0, 0, 0};
+int Led_buffer_timer[3] = {0, 0, 0};
+int Led_buffer_1_timer[3] = {0, 0, 0};
+int Led_buffer_2_timer[3] = {0, 0, 0};
+int MODE = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
